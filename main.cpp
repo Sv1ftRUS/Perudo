@@ -33,15 +33,21 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
     cout << "Программа моделирования игры в кости - Перудо." << endl;
-    game_init();
-    game_modelling();
-    game_result();
-    cout<<endl;
-    cout<<endl;
-    cout<<endl;
-    cout<<endl;
-    int i;
-    cin>>i;
+
+    int i=1;
+    while(i)
+    {
+        game_init();
+        game_modelling();
+        game_result();
+        cout<<endl;
+        cout<<endl;
+        cout<<endl;
+        cout<<endl;
+        cout << "Для завершения введи 0, если хочешь продолжить 1" << endl;
+        cin>>i;
+        system("cls");
+    }
     return 0;
 }
 
@@ -49,6 +55,17 @@ void game_init()
 {
     int dice_count = 0;
     int player_dice_count =0;
+
+    //очистка векторов
+    x_game_result_v.clear();
+    game_result_v_stat1.clear();
+    game_result_v_stat2.clear();
+    game_result_v_stat3.clear();
+    game_result_v_stat4.clear();
+    game_result_v_stat5.clear();
+    game_result_v_stat6.clear();
+
+
     cout << "Введи количество кубиков в игре." << endl;
     cin>>dice_count;
     x_game_result_v.resize(dice_count, 0);
