@@ -2,12 +2,13 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+ #include <iomanip>
 
 //#define debug
+#define vertPrint
 #define NUM_OF_GAMES 10000
 
 using namespace std;
-
 
 vector <int> player_dice;
 vector <int> x_game_result_v;
@@ -28,6 +29,7 @@ void game_result();
 void x_game_result();
 void result_stat_percent (vector<double> &result_v_procent_stat, const vector<int> &result_v_stat);
 void result_stat_print (vector<double> &result_v_procent_stat, int num);
+void result_stat_print_Vertical (vector<double> &game_result_v_stat1_percent, vector<double> &game_result_v_stat2_percent, vector<double> &game_result_v_stat3_percent, vector<double> &game_result_v_stat4_percent, vector<double> &game_result_v_stat5_percent, vector<double> &game_result_v_stat6_percent);
 
 int main()
 {
@@ -66,7 +68,7 @@ void game_init()
     game_result_v_stat6.clear();
 
 
-    cout << "¬веди количество кубиков в игре." << endl;
+    cout << "¬веди количество кубиков в игре:" << endl;
     cin>>dice_count;
     x_game_result_v.resize(dice_count, 0);
     game_result_v_stat1.resize(dice_count, 0);
@@ -76,11 +78,11 @@ void game_init()
     game_result_v_stat5.resize(dice_count, 0);
     game_result_v_stat6.resize(dice_count, 0);
 
-    cout << "¬веди количество своих кубиков" << endl;
+    cout << "¬веди количество своих кубиков:" << endl;
     cin>>player_dice_count;
     player_dice.resize(player_dice_count, 0);
 
-    cout << "¬веди по одному какие кубики у теб€ выпали" << endl;
+    cout << "¬веди по одному какие кубики у теб€ выпали:" << endl;
     for(int i=0; i<player_dice_count; i++)
     {
         cin>>player_dice[i];
@@ -171,27 +173,44 @@ void game_result()
 
     vector<double> game_result_v_stat1_percent(game_result_v_stat1.size(),0);
     result_stat_percent(game_result_v_stat1_percent, game_result_v_stat1);
+    #ifndef vertPrint
     result_stat_print (game_result_v_stat1_percent, 1);
+    #endif // vertPrint
+
 
     vector<double> game_result_v_stat2_percent(game_result_v_stat2.size(),0);
     result_stat_percent(game_result_v_stat2_percent, game_result_v_stat2);
+    #ifndef vertPrint
     result_stat_print (game_result_v_stat2_percent, 2);
+    #endif // vertPrint
 
     vector<double> game_result_v_stat3_percent(game_result_v_stat3.size(),0);
     result_stat_percent(game_result_v_stat3_percent, game_result_v_stat3);
+    #ifndef vertPrint
     result_stat_print (game_result_v_stat3_percent, 3);
+    #endif // vertPrint
 
     vector<double> game_result_v_stat4_percent(game_result_v_stat4.size(),0);
     result_stat_percent(game_result_v_stat4_percent, game_result_v_stat4);
+    #ifndef vertPrint
     result_stat_print (game_result_v_stat4_percent, 4);
+    #endif // vertPrint
 
     vector<double> game_result_v_stat5_percent(game_result_v_stat5.size(),0);
     result_stat_percent(game_result_v_stat5_percent, game_result_v_stat5);
+    #ifndef vertPrint
     result_stat_print (game_result_v_stat5_percent, 5);
+    #endif // vertPrint
 
     vector<double> game_result_v_stat6_percent(game_result_v_stat6.size(),0);
     result_stat_percent(game_result_v_stat6_percent, game_result_v_stat6);
+    #ifndef vertPrint
     result_stat_print (game_result_v_stat6_percent, 6);
+    #endif // vertPrint
+
+    #ifdef vertPrint
+    result_stat_print_Vertical (game_result_v_stat1_percent, game_result_v_stat2_percent, game_result_v_stat3_percent, game_result_v_stat4_percent, game_result_v_stat5_percent, game_result_v_stat6_percent);
+    #endif // vertPrint
     cout<<endl;
 }
 
@@ -218,3 +237,36 @@ void result_stat_print (vector<double> &result_v_procent_stat, int num)
     cout<<endl;
     cout<<endl;
 }
+
+void result_stat_print_Vertical (vector<double> &game_result_v_stat1_percent, vector<double> &game_result_v_stat2_percent, vector<double> &game_result_v_stat3_percent, vector<double> &game_result_v_stat4_percent, vector<double> &game_result_v_stat5_percent, vector<double> &game_result_v_stat6_percent)
+{
+    vector<double>::iterator it_stat1 = game_result_v_stat1_percent.begin();
+    vector<double>::iterator it_stat2 = game_result_v_stat2_percent.begin();
+    vector<double>::iterator it_stat3 = game_result_v_stat3_percent.begin();
+    vector<double>::iterator it_stat4 = game_result_v_stat4_percent.begin();
+    vector<double>::iterator it_stat5 = game_result_v_stat5_percent.begin();
+    vector<double>::iterator it_stat6 = game_result_v_stat6_percent.begin();
+
+    cout.setf(ios::right);
+    cout<<setw(5)<<"1"<<setw(11)<<" "<<setw(5)<<"2"<<setw(11)<<" "<<setw(5)<<"3"<<setw(11)<<" "<<setw(5)<<"4"<<setw(11)<<" "<<setw(5)<<"5"<<setw(11)<<" "<<setw(5)<<"6"<<setw(11)<<" "<<endl;
+    for (int i=0; i<game_result_v_stat1_percent.size(); i++)
+    {
+        cout<<fixed<<setprecision(1)<<setw(5)<<*it_stat1<<"%["<<i<<"раз]"<<"\t";
+        cout<<fixed<<setprecision(1)<<setw(5)<<*it_stat2<<"%["<<i<<"раз]"<<"\t";
+        cout<<fixed<<setprecision(1)<<setw(5)<<*it_stat3<<"%["<<i<<"раз]"<<"\t";
+        cout<<fixed<<setprecision(1)<<setw(5)<<*it_stat4<<"%["<<i<<"раз]"<<"\t";
+        cout<<fixed<<setprecision(1)<<setw(5)<<*it_stat5<<"%["<<i<<"раз]"<<"\t";
+        cout<<fixed<<setprecision(1)<<setw(5)<<*it_stat6<<"%["<<i<<"раз]"<<"\t";
+        cout<<endl;
+
+        ++it_stat1;
+        ++it_stat2;
+        ++it_stat3;
+        ++it_stat4;
+        ++it_stat5;
+        ++it_stat6;
+    }
+    cout<<endl;
+    cout<<endl;
+}
+

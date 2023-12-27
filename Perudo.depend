@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1703574652 source:d:\slava\programming\cpp\perudo\main.cpp
+1703667433 source:d:\slava\programming\cpp\perudo\main.cpp
 	<iostream>
 	<vector>
 	<cstdlib>
 	<ctime>
+	<iomanip>
 
